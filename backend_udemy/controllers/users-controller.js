@@ -59,7 +59,7 @@ const signup = async (req, res, next) => {
     const createdUser = new User({
         name,
         email,
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuxaGTvvQV95FEZtUZq5FTbRs8WVHYP0Ss_jr6STVN8DZopv64&usqp=CAU',
+        image: req.file.path,
         password,
         places: []
     })
@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
     // if (!identifiedUser || identifiedUser.password != password) {
     //     throw new HttpError('COuld not identify user, credentials are wrong')
     // }
-    res.json({ message: 'logged in' })
+    res.json({ message: 'logged in', user: existingUser.toObject({ getters: true }) })
 }
 
 exports.getUsers = getUsers
