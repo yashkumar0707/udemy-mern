@@ -114,6 +114,10 @@ const login = async (req, res, next) => {
     const error = new HttpError('Could not login, please check your credentials and try again', 500)
     return next(error)
   }
+  if (!isValidPassword) {
+    const error = new HttpError('Invalid credentials, please try again', 403)
+    return next(error)
+  }
   let token
   try {
     token = jwt.sign({ userId: existingUser.id, email: existingUser.email }, 'supersecret_dont_share', { expiresIn: '1h' })
